@@ -10,4 +10,4 @@ Hardware:
 Altium Designer 
 
 Firmware:
-MPLABX - XC8 - PIC 16F973
+MPLABX - XC8 - PIC 16F873
