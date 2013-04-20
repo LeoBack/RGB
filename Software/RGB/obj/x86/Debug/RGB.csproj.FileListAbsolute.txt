@@ -1,0 +1,12 @@
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\bin\Debug\RGB.exe.config
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\bin\Debug\RGB.exe
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\bin\Debug\RGB.pdb
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\ResolveAssemblyReference.cache
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\RGB.frmAuxiliar.resources
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\RGB.frmMain.resources
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\RGB.frmSettings.resources
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\RGB.Properties.Resources.resources
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\GenerateResource.read.1.tlog
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\GenerateResource.write.1.tlog
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\RGB.exe
+F:\Users\Leo\SkyDrive\C#\Proyectos\RGB\RGB\obj\x86\Debug\RGB.pdb
