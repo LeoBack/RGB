@@ -4,7 +4,7 @@
  * Author: Back Leonardo
  */
 /*******************************************************/
-/* USART Function Prototypes                          */
+/* USART Function Prototypes                           */
 /*******************************************************/
 /**
  * Función que debe configurar el Oscilador

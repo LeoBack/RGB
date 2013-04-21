@@ -45,11 +45,11 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.p1 ${OBJECTDIR}/usart.p1 ${OBJECTDIR}/configuration_bits.p1 ${OBJECTDIR}/system.p1
-POSSIBLE_DEPFILES=${OBJECTDIR}/main.p1.d ${OBJECTDIR}/usart.p1.d ${OBJECTDIR}/configuration_bits.p1.d ${OBJECTDIR}/system.p1.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/main.p1 ${OBJECTDIR}/usart.p1 ${OBJECTDIR}/configuration_bits.p1 ${OBJECTDIR}/system.p1 ${OBJECTDIR}/ports.p1
+POSSIBLE_DEPFILES=${OBJECTDIR}/main.p1.d ${OBJECTDIR}/usart.p1.d ${OBJECTDIR}/configuration_bits.p1.d ${OBJECTDIR}/system.p1.d ${OBJECTDIR}/ports.p1.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/main.p1 ${OBJECTDIR}/usart.p1 ${OBJECTDIR}/configuration_bits.p1 ${OBJECTDIR}/system.p1
+OBJECTFILES=${OBJECTDIR}/main.p1 ${OBJECTDIR}/usart.p1 ${OBJECTDIR}/configuration_bits.p1 ${OBJECTDIR}/system.p1 ${OBJECTDIR}/ports.p1
 
 
 CFLAGS=
@@ -100,6 +100,13 @@ ${OBJECTDIR}/system.p1: system.c  nbproject/Makefile-${CND_CONF}.mk
 	@-${MV} ${OBJECTDIR}/system.d ${OBJECTDIR}/system.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/system.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
+${OBJECTDIR}/ports.p1: ports.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/ports.p1.d 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G --asmlist  -D__DEBUG=1 --debugger=icd3  --double=24 --float=24 --opt=default,+asm,-asmfile,+speed,-space,-debug,9 --addrqual=ignore -P -N255 --warn=0 --summary=default,-psect,-class,+mem,-hex,-file --runtime=default,+clear,+init,-keep,-no_startup,+osccal,-resetbits,-download,-stackcall,+clib "--errformat=%%f:%%l: error: %%s" "--warnformat=%%f:%%l: warning: %%s" "--msgformat=%%f:%%l: advisory: %%s"  -o${OBJECTDIR}/ports.p1  ports.c 
+	@-${MV} ${OBJECTDIR}/ports.d ${OBJECTDIR}/ports.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/ports.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
 else
 ${OBJECTDIR}/main.p1: main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
@@ -128,6 +135,13 @@ ${OBJECTDIR}/system.p1: system.c  nbproject/Makefile-${CND_CONF}.mk
 	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G --asmlist  --double=24 --float=24 --opt=default,+asm,-asmfile,+speed,-space,-debug,9 --addrqual=ignore -P -N255 --warn=0 --summary=default,-psect,-class,+mem,-hex,-file --runtime=default,+clear,+init,-keep,-no_startup,+osccal,-resetbits,-download,-stackcall,+clib "--errformat=%%f:%%l: error: %%s" "--warnformat=%%f:%%l: warning: %%s" "--msgformat=%%f:%%l: advisory: %%s"  -o${OBJECTDIR}/system.p1  system.c 
 	@-${MV} ${OBJECTDIR}/system.d ${OBJECTDIR}/system.p1.d 
 	@${FIXDEPS} ${OBJECTDIR}/system.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
+	
+${OBJECTDIR}/ports.p1: ports.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/ports.p1.d 
+	${MP_CC} --pass1 $(MP_EXTRA_CC_PRE) --chip=$(MP_PROCESSOR_OPTION) -Q -G --asmlist  --double=24 --float=24 --opt=default,+asm,-asmfile,+speed,-space,-debug,9 --addrqual=ignore -P -N255 --warn=0 --summary=default,-psect,-class,+mem,-hex,-file --runtime=default,+clear,+init,-keep,-no_startup,+osccal,-resetbits,-download,-stackcall,+clib "--errformat=%%f:%%l: error: %%s" "--warnformat=%%f:%%l: warning: %%s" "--msgformat=%%f:%%l: advisory: %%s"  -o${OBJECTDIR}/ports.p1  ports.c 
+	@-${MV} ${OBJECTDIR}/ports.d ${OBJECTDIR}/ports.p1.d 
+	@${FIXDEPS} ${OBJECTDIR}/ports.p1.d $(SILENT) -rsi ${MP_CC_DIR}../  
 	
 endif
 

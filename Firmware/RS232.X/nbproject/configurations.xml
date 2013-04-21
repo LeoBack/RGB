@@ -6,6 +6,7 @@
                    projectFiles="true">
       <itemPath>usart.h</itemPath>
       <itemPath>system.h</itemPath>
+      <itemPath>ports.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -18,6 +19,7 @@
       <itemPath>usart.c</itemPath>
       <itemPath>configuration_bits.c</itemPath>
       <itemPath>system.c</itemPath>
+      <itemPath>ports.c</itemPath>
     </logicalFolder>
     <logicalFolder name="ExternalFiles"
                    displayName="Important Files"

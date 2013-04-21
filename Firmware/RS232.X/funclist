@@ -1,5 +1,7 @@
-_ConfigureOscillator: CODE, 1995 0 1
-_main: CODE, 1999 0 20
-__initialization: CODE, 1996 0 0
+_ConfigureOscillator: CODE, 1953 0 1
+_main: CODE, 1991 0 28
+_configurePorts: CODE, 1957 0 9
+_initializePorts: CODE, 1966 0 25
+__initialization: CODE, 1954 0 0
 _ConfigureUsart: CODE, 2019 0 29
-Total: 50
+Total: 92
