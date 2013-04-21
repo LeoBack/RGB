@@ -1,3 +1,5 @@
-_main: CODE, 1982 0 2
-__initialization: CODE, 2001 0 15
-Total: 17
+_ConfigureOscillator: CODE, 1995 0 1
+_main: CODE, 1999 0 20
+__initialization: CODE, 1996 0 0
+_ConfigureUsart: CODE, 2019 0 29
+Total: 50
