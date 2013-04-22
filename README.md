@@ -3,7 +3,7 @@ RGB
 
 RGB Controller.
 
-![Fail Imagen](http://sdrv.ms/XNTbl0)
+![Fail Imagen](https://raw.github.com/LeoBack/RGB/master/Software/Interfaz.png)
 
 
 ## Project structure ##
