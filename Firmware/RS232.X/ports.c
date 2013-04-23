@@ -51,58 +51,161 @@
 
 #include <xc.h>
 #include "system.h"
+#include "ports.h"
 
-//#define POTred      PORTAbits.RA0;
-//#define POTgreen    PORTAbits.RA1;
-//#define POTblue     PORTAbits.RA2;
-//#define BTNauto     PORTAbits.RA3;
-//#define LEDauto     PORTAbits.RA4;
-//#define LEDmanual   PORTAbits.RA5;
-//
-//#define TX          PORTCbits.RC6;
-//#define RX          PORTCbits.RC7;
+void iniPIC(){
 
-// bit tris = 1 -> input
-// bit tris = 0 -> output
-void configurePorts(){
-    
-    TRISA = 0x0f;
-//    TRISAbits.TRISA0 = 1;
-//    TRISAbits.TRISA1 = 1;
-//    TRISAbits.TRISA2 = 1;
-//    TRISAbits.TRISA3 = 1;
-//    TRISAbits.TRISA4 = 0;
-//    TRISAbits.TRISA5 = 0;
+    // Configuracion Inicial
+    OPTION_REGbits.nRBPU = Enable;      // PORTB Pull-up Enable bi
+    OPTION_REGbits.INTEDG = Disable;    // Interrupt Edge Select bit
+    OPTION_REGbits.T0CS = Disable;      // TMR0 Clock Source Select bit
+    OPTION_REGbits.T0SE = Enable;       // TMR0 Source Edge Select bit
+    OPTION_REGbits.PSA = Disable;       // Prescaler Assignment bit
+    OPTION_REGbits.PS = 0x07;            // Prescaler Rate Select bits
 
-    TRISB = 0xff;
+    //--------------------------------------------------------------------------
+    // Enable/Disable - Interrupciones sobre regitros
+    INTCONbits.T0IE = Enable;           // TMR0 Overflow Interrupt Enable bit
+    INTCONbits.INTE = Disable;          // RB0/INT External Interrupt Enable bit
+    INTCONbits.RBIE = Disable;          // RB Port Change Interrupt Enable bit
 
-    TRISC= 0xff;
+    // Flags - Interrupciones sobre registros
+    INTCONbits.T0IF = Low;              // TMR0 Overflow Interrupt Flag bit
+    INTCONbits.INTF = Low;              // RB0/INT External Interrupt Flag bit
+    INTCONbits.RBIF = Low;              // RB Port Change Interrupt Flag bit
+
+    // Enable/Disable - Peripheral Interrupt
+    //PIE1bits.PSPIE = Disable;         // Parallel Slave Port Read/Write Interrupt Enable bit
+    PIE1bits.ADIE = Enable;             // A/D Converter Interrupt Enable bit
+    PIE1bits.RCIE = Disable;            // USART Receive Interrupt Enable bit
+    PIE1bits.TXIE = Disable;            // USART Transmit Interrupt Enable bit
+    PIE1bits.SSPIE = Disable;           // Synchronous Serial Port Interrupt Enable bit
+    PIE1bits.CCP1IE = Disable;          // CCP1 Interrupt Enable bit
+    PIE1bits.TMR2IE = Disable;          // TMR2 to PR2 Match Interrupt Enable bit
+    PIE1bits.TMR1IE = Disable;          // TMR1 Overflow Interrupt Enable bit
+
+    // Flags - Peripheral Interrupt
+    //PIR1bits.PSPIF = Disable;         // Parallel Slave Port Read/Write Interrupt Flag bit
+    PIR1bits.ADIF = Low;                // A/D Converter Interrupt Flag bit
+    PIR1bits.RCIF = Low;                // USART Receive Interrupt Flag bit
+    PIR1bits.TXIF = Low;                // USART Transmit Interrupt Flag bit
+    PIR1bits.SSPIF = Low;               // Synchronous Serial Port (SSP) Interrupt Flag
+    PIR1bits.CCP1IF = Low;              // CCP1 Interrupt Flag bit
+    PIR1bits.TMR2IF = Low;              // TMR2 to PR2 Match Interrupt Flag bit
+    PIR1bits.TMR1IF = Low;              // TMR1 Overflow Interrupt Flag bit
+
+    // Enable/Disable - Peripheral Interrupt
+    //Bus collision, CCP and EEPROM
+    PIE2bits.EEIE = Disable;            // EEPROM Write Operation Interrupt Enable
+    PIE2bits.BCLIE = Disable;           // Bus Collision Interrupt Enable
+    PIE2bits.CCP2IE = Disable;          // CCP2 Interrupt Enable bit
+
+    // Flags - Peripheral Interrupt
+    //Bus collision, CCP and EEPROM
+    PIR2bits.EEIF = Low;                // EEPROM Write Operation Interrupt Flag bit
+    PIR2bits.CCP2IF = Low;              // Bus Collision Interrupt Flag bit
+    PIR2bits.CCP2IF = Low;              // CCP2 Interrupt Flag bit
+
+    // Interrupciones General
+    INTCONbits.GIE = Disable;           // Global Interrupt Enable bit
+    INTCONbits.PEIE = Disable;          // Peripheral Interrupt Enable bit
+
+    //--------------------------------------------------------------------------
 }
 
-void initializePorts(){
+void iniTMR1(){
+    T1CONbits.T1CKPS = Disable;
+}
 
-    PORTAbits.RA0 = 0;
-    PORTAbits.RA1 = 0;
-    PORTAbits.RA2 = 0;
-    PORTAbits.RA3 = 0;
-    PORTAbits.RA4 = 0;
-    PORTAbits.RA5 = 0;
-    //
-    PORTBbits.RB0 = 1;
-    PORTBbits.RB1 = 0;
-    PORTBbits.RB2 = 0;
-    PORTBbits.RB3 = 0;
-    PORTBbits.RB4 = 0;
-    PORTBbits.RB5 = 0;
-    PORTBbits.RB6 = 0;
-    PORTBbits.RB7 = 0;
-    //
-    PORTCbits.RC0 = 0;
-    PORTCbits.RC1 = 0;
-    PORTCbits.RC2 = 0;
-    PORTCbits.RC3 = 0;
-    PORTCbits.RC4 = 0;
-    PORTCbits.RC5 = 0;
-    PORTCbits.RC6 = 0;
-    PORTCbits.RC7 = 0;
+void iniTMR2(){
+    T2CONbits.T2CKPS = Disable;
+}
+
+// Cap 10.0
+void iniSerialPort(){
+    // REGISTER 10-1: TXSTA: TRANSMIT STATUS AND CONTROL REGISTER (ADDRESS 98h)
+    TXSTAbits.CSRC = Disable;           // Clock Source Select bit
+    TXSTAbits.TX9 = Disable;            // 9-bit Transmit Enable bit
+    TXSTAbits.TXEN = Disable;           // Transmit Enable bit
+    TXSTAbits.SYNC = Disable;           // USART Mode Select bit
+    TXSTAbits.BRGH = Disable;           // High Baud Rate Select bit
+//  TXSTAbits.TRMT = Disable;           // Transmit Shift Register Status bit
+    TXSTAbits.TX9D = Disable;           // 9th bit of Transmit Data, can be parity bit
+
+    // REGISTER 10-2: RCSTA: RECEIVE STATUS AND CONTROL REGISTER (ADDRESS 18h)
+    RCSTAbits.SPEN = Disable;           // Serial Port Enable bit
+    RCSTAbits.RX9 = Disable;            // 9-bit Receive Enable bit
+    RCSTAbits.SREN = Disable;           // Single Receive Enable bit
+    RCSTAbits.CREN = Disable;           // Continuous Receive Enable bit
+    RCSTAbits.ADDEN = Disable;          // Address Detect Enable bit
+//  RCSTAbits.FERR = Disable;           // Framing Error bit
+//  RCSTAbits.OERR = Disable;           // Overrun Error bit
+//  RCSTAbits.RX9D = Disable;           // 9th bit of Received Data (can be parity bit,
+                                        // but must be calculated by user firmware)
+    
+}
+
+// Cap 11.0
+void iniADC(){
+    
+}
+
+void iniPorts(){
+
+    TRISA = 0x0f;
+//    TRISAbits.TRISA0 = In;
+//    TRISAbits.TRISA1 = In;
+//    TRISAbits.TRISA2 = In;
+//    TRISAbits.TRISA3 = In;
+//    TRISAbits.TRISA4 = Out;
+//    TRISAbits.TRISA5 = Out;
+
+    TRISB = 0xff;
+//    TRISBbits.TRISB0 = In;
+//    TRISBbits.TRISB1 = In;
+//    TRISBbits.TRISB2 = In;
+//    TRISBbits.TRISB3 = In;
+//    TRISBbits.TRISB4 = In;
+//    TRISBbits.TRISB5 = In;
+//    TRISBbits.TRISB6 = In;
+//    TRISBbits.TRISB7 = In;
+
+    TRISC= 0xff;
+//    TRISCbits.TRISC0 = In;
+//    TRISCbits.TRISC1 = In;
+//    TRISCbits.TRISC2 = In;
+//    TRISCbits.TRISC3 = In;
+//    TRISCbits.TRISC4 = In;
+//    TRISCbits.TRISC5 = In;
+//    TRISCbits.TRISC6 = In;
+//    TRISCbits.TRISC7 = In;
+}
+
+void setDefaultPorts(){
+
+    PORTA = 0x00;
+//    PORTAbits.RA0 = Low;
+//    PORTAbits.RA1 = Low;
+//    PORTAbits.RA2 = Low;
+//    PORTAbits.RA3 = Low;
+//    PORTAbits.RA4 = Low;
+//    PORTAbits.RA5 = Low;
+    PORTB = 0x00;
+//    PORTBbits.RB0 = Low;
+//    PORTBbits.RB1 = Low;
+//    PORTBbits.RB2 = Low;
+//    PORTBbits.RB3 = Low;
+//    PORTBbits.RB4 = Low;
+//    PORTBbits.RB5 = Low;
+//    PORTBbits.RB6 = Low;
+//    PORTBbits.RB7 = Low;
+    PORTC = 0x00;
+//    PORTCbits.RC0 = Low;
+//    PORTCbits.RC1 = Low;
+//    PORTCbits.RC2 = Low;
+//    PORTCbits.RC3 = Low;
+//    PORTCbits.RC4 = Low;
+//    PORTCbits.RC5 = Low;
+//    PORTCbits.RC6 = Low;
+//    PORTCbits.RC7 = Low;
 }
