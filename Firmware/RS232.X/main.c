@@ -32,11 +32,12 @@ int main(int argc, char** argv) {
     ConfigureOscillator();
 
     iniPIC();
+    iniPorts();
+    iniTMR0();
     iniTMR1();
     iniTMR2();
     iniSerialPort();
     iniADC();
-    iniPorts();
 
     // Set Puertos
     setDefaultPorts();

@@ -55,13 +55,13 @@
 
 void iniPIC(){
 
+    // Interrupciones General
+    INTCONbits.GIE = Disable;           // Global Interrupt Enable bit
+    INTCONbits.PEIE = Disable;          // Peripheral Interrupt Enable bit
+
     // Configuracion Inicial
     OPTION_REGbits.nRBPU = Enable;      // PORTB Pull-up Enable bi
     OPTION_REGbits.INTEDG = Disable;    // Interrupt Edge Select bit
-    OPTION_REGbits.T0CS = Disable;      // TMR0 Clock Source Select bit
-    OPTION_REGbits.T0SE = Enable;       // TMR0 Source Edge Select bit
-    OPTION_REGbits.PSA = Disable;       // Prescaler Assignment bit
-    OPTION_REGbits.PS = 0x07;            // Prescaler Rate Select bits
 
     //--------------------------------------------------------------------------
     // Enable/Disable - Interrupciones sobre regitros
@@ -105,51 +105,10 @@ void iniPIC(){
     PIR2bits.EEIF = Low;                // EEPROM Write Operation Interrupt Flag bit
     PIR2bits.CCP2IF = Low;              // Bus Collision Interrupt Flag bit
     PIR2bits.CCP2IF = Low;              // CCP2 Interrupt Flag bit
-
-    // Interrupciones General
-    INTCONbits.GIE = Disable;           // Global Interrupt Enable bit
-    INTCONbits.PEIE = Disable;          // Peripheral Interrupt Enable bit
-
-    //--------------------------------------------------------------------------
 }
 
-void iniTMR1(){
-    T1CONbits.T1CKPS = Disable;
-}
-
-void iniTMR2(){
-    T2CONbits.T2CKPS = Disable;
-}
-
-// Cap 10.0
-void iniSerialPort(){
-    // REGISTER 10-1: TXSTA: TRANSMIT STATUS AND CONTROL REGISTER (ADDRESS 98h)
-    TXSTAbits.CSRC = Disable;           // Clock Source Select bit
-    TXSTAbits.TX9 = Disable;            // 9-bit Transmit Enable bit
-    TXSTAbits.TXEN = Disable;           // Transmit Enable bit
-    TXSTAbits.SYNC = Disable;           // USART Mode Select bit
-    TXSTAbits.BRGH = Disable;           // High Baud Rate Select bit
-//  TXSTAbits.TRMT = Disable;           // Transmit Shift Register Status bit
-    TXSTAbits.TX9D = Disable;           // 9th bit of Transmit Data, can be parity bit
-
-    // REGISTER 10-2: RCSTA: RECEIVE STATUS AND CONTROL REGISTER (ADDRESS 18h)
-    RCSTAbits.SPEN = Disable;           // Serial Port Enable bit
-    RCSTAbits.RX9 = Disable;            // 9-bit Receive Enable bit
-    RCSTAbits.SREN = Disable;           // Single Receive Enable bit
-    RCSTAbits.CREN = Disable;           // Continuous Receive Enable bit
-    RCSTAbits.ADDEN = Disable;          // Address Detect Enable bit
-//  RCSTAbits.FERR = Disable;           // Framing Error bit
-//  RCSTAbits.OERR = Disable;           // Overrun Error bit
-//  RCSTAbits.RX9D = Disable;           // 9th bit of Received Data (can be parity bit,
-                                        // but must be calculated by user firmware)
-    
-}
-
-// Cap 11.0
-void iniADC(){
-    
-}
-
+// Cap 3.0
+// I/O PORTS
 void iniPorts(){
 
     TRISA = 0x0f;
@@ -181,6 +140,8 @@ void iniPorts(){
 //    TRISCbits.TRISC7 = In;
 }
 
+// Cap 3.0
+// I/O PORTS
 void setDefaultPorts(){
 
     PORTA = 0x00;
@@ -208,4 +169,106 @@ void setDefaultPorts(){
 //    PORTCbits.RC5 = Low;
 //    PORTCbits.RC6 = Low;
 //    PORTCbits.RC7 = Low;
+}
+
+// Cap 5.0
+// TIMER0 MODULE
+void iniTMR0(){
+    // REGISTER 5-1: OPTION_REG REGISTER
+    OPTION_REGbits.T0CS = Disable;      // TMR0 Clock Source Select bit
+    OPTION_REGbits.T0SE = Enable;       // TMR0 Source Edge Select bit
+    OPTION_REGbits.PSA = Disable;       // Prescaler Assignment bit
+    OPTION_REGbits.PS = 0x07;           // Prescaler Rate Select bits
+}
+
+// Cap 6.0
+// TIMER1 MODULE
+void iniTMR1(){
+    //REGISTER 6-1: T1CON: TIMER1 CONTROL REGISTER (ADDRESS 10h)
+    T1CONbits.T1CKPS = 0x02;            // Timer1 Input Clock Prescale Select bits
+    T1CONbits.T1OSCEN = Higt;           // Timer1 Oscillator Enable Control bit
+    T1CONbits.nT1SYNC = Disable;        // Timer1 External Clock Input Synchronization Control bit
+    T1CONbits.TMR1CS = Low;             // Timer1 Clock Source Select bit
+    T1CONbits.TMR1ON = Low;             // Timer1 On bit
+}
+
+// Cap 7.0
+// TIMER2 MODULE
+void iniTMR2(){
+    //REGISTER 7-1: T2CON: TIMER2 CONTROL REGISTER (ADDRESS 12h)
+    T2CONbits.TOUTPS = 0x00;            // Timer2 Output Postscale Select bits
+    T2CONbits.TMR2ON = Disable;         // Timer2 On bit
+    T2CONbits.T2CKPS = 0x00;            //Timer2 Clock Prescale Select bits
+}
+
+// Cap 9.0
+// MASTER SYNCHRONOUS SERIAL PORT (MSSP) MODULE
+void iniI2C(){
+    // REGISTER 9-1: SSPSTAT: SYNC SERIAL PORT STATUS REGISTER (ADDRESS: 94h)
+    SSPSTATbits.SMP = Disable;          // Sample bit
+    SSPSTATbits.CKE = Disable;          // SPI Clock Edge Select
+// READ ONLY
+//  SSPSTATbits.D_A = Disable;          // Data/nAddressbit
+//  SSPSTATbits.P = Disable;            // STOP bit
+//  SSPSTATbits.S = Disable;            // START bit
+//  SSPSTATbits.R_W = Low;              // Read/Write bit Information (I2C mode only)
+//  SSPSTATbits.UA = Disable;           // Update Address (10-bit I2C mode only
+//  SSPSTATbits.BF = Disable;           // Buffer Full Status bit
+
+    // REGISTER 9-2: SSPCON: SYNC SERIAL PORT CONTROL REGISTER (ADDRESS 14h)
+    SSPCONbits.WCOL = Disable;          //Write Collision Detect bit
+    SSPCONbits.SSPOV = Disable;         // Receive Overflow Indicator bit
+    SSPCONbits.SSPEN = Disable;         //Synchronous Serial Port Enable bit
+    SSPCONbits.CKP = Disable;           //Clock Polarity Select bit
+    SSPCONbits.SSPM = 0x00;             // Synchronous Serial Port Mode Select bits
+
+    // REGISTER 9-3: SSPCON2: SYNC SERIAL PORT CONTROL REGISTER2 (ADDRESS 91h)
+    SSPCON2bits.GCEN = Disable;         // General Call Enable bit (In I2C Slave mode only)
+    SSPCON2bits.ACKSTAT = Disable;      // Acknowledge Status bit (In I2C Master mode only)
+    SSPCON2bits.ACKDT = Disable;        // Acknowledge Data bit (In I2C Master mode only)
+    SSPCON2bits.ACKEN = Disable;        // Acknowledge Sequence Enable bit (In I2C Master mode only)
+    SSPCON2bits.RCEN = Disable;         // Receive Enable bit (In I2C Master mode only)
+    SSPCON2bits.PEN = Disable;          //STOP Condition Enable bit (In I2C Master mode only)
+    SSPCON2bits.RSEN = Disable;         //Repeated START Condition Enable bit (In I2C Master mode only)
+    SSPCON2bits.SEN = Disable;          // START Condition Enable bit (In I2C Master mode only)
+}
+
+// Cap 10.0
+// ADDRESSABLE UNIVERSAL SYNCHRONOUS ASYNCHRONOUS RECEIVER TRANSMITTER (USART)
+void iniSerialPort(){
+    // REGISTER 10-1: TXSTA: TRANSMIT STATUS AND CONTROL REGISTER (ADDRESS 98h)
+    TXSTAbits.CSRC = Disable;           // Clock Source Select bit
+    TXSTAbits.TX9 = Disable;            // 9-bit Transmit Enable bit
+    TXSTAbits.TXEN = Disable;           // Transmit Enable bit
+    TXSTAbits.SYNC = Disable;           // USART Mode Select bit
+    TXSTAbits.BRGH = Disable;           // High Baud Rate Select bit
+//  TXSTAbits.TRMT = Disable;           // Transmit Shift Register Status bit
+    TXSTAbits.TX9D = Disable;           // 9th bit of Transmit Data, can be parity bit
+
+    // REGISTER 10-2: RCSTA: RECEIVE STATUS AND CONTROL REGISTER (ADDRESS 18h)
+    RCSTAbits.SPEN = Disable;           // Serial Port Enable bit
+    RCSTAbits.RX9 = Disable;            // 9-bit Receive Enable bit
+    RCSTAbits.SREN = Disable;           // Single Receive Enable bit
+    RCSTAbits.CREN = Disable;           // Continuous Receive Enable bit
+    RCSTAbits.ADDEN = Disable;          // Address Detect Enable bit
+// READ ONLY
+//  RCSTAbits.FERR = Disable;           // Framing Error bit
+//  RCSTAbits.OERR = Disable;           // Overrun Error bit
+//  RCSTAbits.RX9D = Disable;           // 9th bit of Received Data (can be parity bit,
+                                        // but must be calculated by user firmware)
+}
+
+// Cap 11.0
+// ANALOG-TO-DIGITAL CONVERTER (A/D) MODULE
+void iniADC(){
+    
+    // ADCON0 REGISTER (ADDRESS: 1Fh)
+    ADCON0bits.ADCS = 0x01;             // A/D Conversion Clock Select bits
+    ADCON0bits.CHS = 0x00;              // Analog Channel Select bits
+    ADCON0bits.GO_nDONE = 0x00;         // A/D Conversion Status bit
+    ADCON0bits.ADON = Disable;          // A/D On bit
+
+    // ADCON1 REGISTER (ADDRESS 9Fh)
+    ADCON1bits.ADFM = Enable;           // A/D Result Format Select bit
+//  ADCON1bits.PCFG = 0x00;             // A/D Port Configuration Control bit
 }

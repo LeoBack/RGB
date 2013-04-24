@@ -19,14 +19,34 @@
 
 void iniPIC();
 
-void iniTMR1();
-
-void iniTMR2();
-
-void iniSerialPort();
-
-void iniADC();
-
+// Cap 3.0
+// I/O PORTS
 void iniPorts();
 
+// Cap 3.0
+// I/O PORTS
 void setDefaultPorts();
+
+// Cap 5.0
+// TIMER0 MODULE
+void iniTMR0();
+
+// Cap 6.0
+// TIMER1 MODULE
+void iniTMR1();
+
+// Cap 7.0
+// TIMER2 MODULE
+void iniTMR2();
+
+// Cap 9.0
+// MASTER SYNCHRONOUS SERIAL PORT (MSSP) MODULE
+void iniI2C();
+
+// Cap 10.0
+// ADDRESSABLE UNIVERSAL SYNCHRONOUS ASYNCHRONOUS RECEIVER TRANSMITTER (USART)
+void iniSerialPort();
+
+// Cap 11.0
+// ANALOG-TO-DIGITAL CONVERTER (A/D) MODULE
+void iniADC();
