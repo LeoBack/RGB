@@ -15,7 +15,6 @@
 //---------------------
 #define Enable      1;
 #define Disable     0;
-//---------------------
 
 void iniPIC();
 
