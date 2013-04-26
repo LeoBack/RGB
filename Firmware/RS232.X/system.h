@@ -11,7 +11,7 @@
  * Este macro es necesario para las funciones de delay.
  */
 //#define _XTAL_FREQ       20000000
-#define _XTAL_FREQ 4000000      // Reloj 4Mhz
+#define _XTAL_FREQ 10000000      // Reloj 10Mhz
 
 /*******************************************************/
 /* System Function Prototypes                          */

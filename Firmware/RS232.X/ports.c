@@ -177,10 +177,10 @@ void setDefaultPorts(){
 // TIMER0 MODULE
 void iniTMR0(){
     // REGISTER 5-1: OPTION_REG REGISTER
-    OPTION_REGbits.T0CS = Disable;      // TMR0 Clock Source Select bit
-    OPTION_REGbits.T0SE = Enable;       // TMR0 Source Edge Select bit
-    OPTION_REGbits.PSA = Disable;       // Prescaler Assignment bit
-    OPTION_REGbits.PS = 0x07;           // Prescaler Rate Select bits
+    OPTION_REGbits.T0CS = Low;          // TMR0 Clock Source Select bit
+    OPTION_REGbits.T0SE = Higt;         // TMR0 Source Edge Select bit
+    OPTION_REGbits.PSA = Higt;          // Prescaler Assignment bit
+    OPTION_REGbits.PS = 0x04;           // Prescaler Rate Select bits
 }
 
 // Cap 6.0

@@ -1,12 +1,7 @@
-_iniPorts: CODE, 1906 0 9
-_setDefaultPorts: CODE, 1876 0 6
-_iniTMR2: CODE, 1882 0 8
-_iniSerialPort: CODE, 1940 0 16
-_ConfigureOscillator: CODE, 1875 0 1
-_main: CODE, 1995 0 53
-_iniADC: CODE, 1926 0 14
-_iniTMR1: CODE, 1915 0 11
-__initialization: CODE, 1898 0 5
-_iniPIC: CODE, 1956 0 39
-_iniTMR0: CODE, 1890 0 8
-Total: 170
+_iniPorts: CODE, 2000 0 9
+_setDefaultPorts: CODE, 1994 0 6
+_ConfigureOscillator: CODE, 1988 0 1
+_main: CODE, 2019 0 29
+__initialization: CODE, 1989 0 2
+_iniTMR0: CODE, 2009 0 10
+Total: 57
