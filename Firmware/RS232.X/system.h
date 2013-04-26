@@ -10,7 +10,7 @@
  * Indica que el pic funcionará a 8MHz.
  * Este macro es necesario para las funciones de delay.
  */
-//#define _XTAL_FREQ       20000000
+
 #define _XTAL_FREQ 10000000      // Reloj 10Mhz
 
 /*******************************************************/

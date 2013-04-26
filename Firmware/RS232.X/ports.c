@@ -54,8 +54,7 @@
 #include "ports.h"
 //
 
-
-void iniPIC(){
+void iniPIC(void){
 
     // Interrupciones General
     INTCONbits.GIE = Disable;           // Global Interrupt Enable bit
@@ -111,14 +110,14 @@ void iniPIC(){
 
 // Cap 3.0
 // I/O PORTS
-void iniPorts(){
+void iniPorts(void){
 
-    TRISA = 0x0f;
+    TRISA = 0b00010111;//0x0f;
 //    TRISAbits.TRISA0 = In;
 //    TRISAbits.TRISA1 = In;
 //    TRISAbits.TRISA2 = In;
 //    TRISAbits.TRISA3 = In;
-//    TRISAbits.TRISA4 = Out;
+//    TRISAbits.TRISA4 = Out;       // Digital Only Output
 //    TRISAbits.TRISA5 = Out;
 
     TRISB = 0xff;
@@ -144,7 +143,7 @@ void iniPorts(){
 
 // Cap 3.0
 // I/O PORTS
-void setDefaultPorts(){
+void setDefaultPorts(void){
 
     PORTA = 0x00;
 //    PORTAbits.RA0 = Low;
@@ -175,7 +174,7 @@ void setDefaultPorts(){
 
 // Cap 5.0
 // TIMER0 MODULE
-void iniTMR0(){
+void iniTMR0(void){
     // REGISTER 5-1: OPTION_REG REGISTER
     OPTION_REGbits.T0CS = Low;          // TMR0 Clock Source Select bit
     OPTION_REGbits.T0SE = Higt;         // TMR0 Source Edge Select bit
@@ -185,7 +184,7 @@ void iniTMR0(){
 
 // Cap 6.0
 // TIMER1 MODULE
-void iniTMR1(){
+void iniTMR1(void){
     //REGISTER 6-1: T1CON: TIMER1 CONTROL REGISTER (ADDRESS 10h)
     T1CONbits.T1CKPS = 0x02;            // Timer1 Input Clock Prescale Select bits
     T1CONbits.T1OSCEN = Higt;           // Timer1 Oscillator Enable Control bit
@@ -196,7 +195,7 @@ void iniTMR1(){
 
 // Cap 7.0
 // TIMER2 MODULE
-void iniTMR2(){
+void iniTMR2(void){
     //REGISTER 7-1: T2CON: TIMER2 CONTROL REGISTER (ADDRESS 12h)
     T2CONbits.TOUTPS = 0x00;            // Timer2 Output Postscale Select bits
     T2CONbits.TMR2ON = Disable;         // Timer2 On bit
@@ -205,7 +204,7 @@ void iniTMR2(){
 
 // Cap 9.0
 // MASTER SYNCHRONOUS SERIAL PORT (MSSP) MODULE
-void iniI2C(){
+void iniI2C(void){
     // REGISTER 9-1: SSPSTAT: SYNC SERIAL PORT STATUS REGISTER (ADDRESS: 94h)
     SSPSTATbits.SMP = Disable;          // Sample bit
     SSPSTATbits.CKE = Disable;          // SPI Clock Edge Select
@@ -237,7 +236,7 @@ void iniI2C(){
 
 // Cap 10.0
 // ADDRESSABLE UNIVERSAL SYNCHRONOUS ASYNCHRONOUS RECEIVER TRANSMITTER (USART)
-void iniSerialPort(){
+void iniSerialPort(void){
     // REGISTER 10-1: TXSTA: TRANSMIT STATUS AND CONTROL REGISTER (ADDRESS 98h)
     TXSTAbits.CSRC = Disable;           // Clock Source Select bit
     TXSTAbits.TX9 = Disable;            // 9-bit Transmit Enable bit
@@ -262,13 +261,13 @@ void iniSerialPort(){
 
 // Cap 11.0
 // ANALOG-TO-DIGITAL CONVERTER (A/D) MODULE
-void iniADC(){
-    
+void iniADC(void){
+
     // ADCON0 REGISTER (ADDRESS: 1Fh)
     ADCON0bits.ADCS = 0x01;             // A/D Conversion Clock Select bits
     ADCON0bits.CHS = 0x00;              // Analog Channel Select bits
-    ADCON0bits.GO_nDONE = 0x00;         // A/D Conversion Status bit
-    ADCON0bits.ADON = Disable;          // A/D On bit
+    ADCON0bits.GO_nDONE = Low;          // A/D Conversion Status bit
+    ADCON0bits.ADON = Enable;           // A/D On bit
 
     // ADCON1 REGISTER (ADDRESS 9Fh)
     ADCON1bits.ADFM = Enable;           // A/D Result Format Select bit
