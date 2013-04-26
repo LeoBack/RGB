@@ -16,6 +16,7 @@
 #include "system.h"
 #include "usart.h"
 #include "ports.h"
+#include "functions.h"
 
 //---Buffer Digital I/O PORTA
 union {
@@ -76,21 +77,8 @@ void UpdatePort(void){
 /*
  * 
  */
-int main(int argc, char** argv) {
-
-    // Configura el oscilador
-    ConfigureOscillator();
-
-    iniPIC();
-    iniPorts();
-    iniTMR0();
-    //iniTMR1();
-    //iniTMR2();
-    //iniSerialPort();
-    //iniADC();
-
     // Set Puertos
-    setDefaultPorts();
+    //setDefaultPorts();
    
     // BRGH = 1
     // SPBRG = 64 = // 19200 Bauds
@@ -100,28 +88,79 @@ int main(int argc, char** argv) {
 //    y las interrupciones antes de comenzar a trabajar
 //--------------------------------------------------------------------------
 
+int main(int argc, char** argv){
+    // Configura el oscilador
+    ConfigureOscillator();
+
+    iniPIC();
+    iniPorts();
+    iniTMR0();
+    iniADC();
+    //
+    setDefaultPorts();
+    INTCONbits.GIE = Enable;            // Global Interrupt Enable bit
+    INTCONbits.PEIE = Enable;           // Peripheral Interrupt Enable bit
+
     while(1){
+        // ADC Channel 0
+            ADCON0bits.CHS = 0x00;
+            ADCON0bits.GO_nDONE = Higt;
 
         if(PORTAbits.RA4 == 1){
-            sPORTA.RA3 = Higt;
+            sPORTA.RA2 = Higt;
             sPORTA.RA5 = Higt;
             UpdatePort();    // Actualizar Puertos
         }
         else{
-        sPORTA.RA3 = Higt;
-        sPORTA.RA5 = Low;
-        UpdatePort();        // Actualizar Puertos
-        __delay_ms(100);
-        sPORTA.RA3 = Low;
-        sPORTA.RA5 = Higt;
-        UpdatePort();        // Actualizar Puertos
-        __delay_ms(100);
-        sPORTA.RA3 = Low;
-        sPORTA.RA5 = Low;
-        UpdatePort();        // Actualizar Puertos
-        __delay_ms(100);
+            sPORTA.RA2 = Higt;
+            UpdatePort();        // Actualizar Puertos
+            __delay_ms(100);
+            sPORTA.RA2 = Low;
+            UpdatePort();        // Actualizar Puertos
+            __delay_ms(100);
+            sPORTA.RA5 = Low;
+            UpdatePort();        // Actualizar Puertos
         }
     }
+}
+
+void interrupt isr(void){
+// ADC -------------------------------------------------------------------------
+    if(PIR1bits.ADIF){
+        PIR1bits.ADIF = Low;
+
+        if(ADRESL < 0xC8){
+            sPORTA.RA5 = Higt;
+        }
+        else{
+             sPORTA.RA5 = Low;
+        }
+        UpdatePort();    // Actualizar Puertos
+    }
+
+// TIMER------------------------------------------------------------------------
+    if (INTCONbits.T0IF){
+        INTCONbits.T0IF = Low;
+    }
+
+    if(PIR1bits.TMR1IF){
+        PIR1bits.TMR1IF = Low;
+    }
+
+    if(PIR1bits.TMR2IF){
+        PIR1bits.TMR2IF = Low;
+    }
+
+// RB0 -------------------------------------------------------------------------
+    if(INTCONbits.RBIF){
+        INTCONbits.RBIF = Low;
+    }
+
+    if(INTCONbits.INTF){
+        INTCONbits.INTF = Low;
+    }
+
+//------------------------------------------------------------------------------
 }
 
 

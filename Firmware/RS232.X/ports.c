@@ -52,48 +52,47 @@
 #include <xc.h>
 #include "system.h"
 #include "ports.h"
-//
 
 void iniPIC(void){
 
     // Interrupciones General
-    INTCONbits.GIE = Disable;           // Global Interrupt Enable bit
-    INTCONbits.PEIE = Disable;          // Peripheral Interrupt Enable bit
+    INTCONbits.GIE = Disable;            // Global Interrupt Enable bit
+    INTCONbits.PEIE = Disable;           // Peripheral Interrupt Enable bit
 
     // Configuracion Inicial
-    OPTION_REGbits.nRBPU = Enable;      // PORTB Pull-up Enable bi
-    OPTION_REGbits.INTEDG = Disable;    // Interrupt Edge Select bit
+//    OPTION_REGbits.nRBPU = Enable;      // PORTB Pull-up Enable bit
+//    OPTION_REGbits.INTEDG = Disable;    // Interrupt Edge Select bit
 
     //--------------------------------------------------------------------------
     // Enable/Disable - Interrupciones sobre regitros
-    INTCONbits.T0IE = Enable;           // TMR0 Overflow Interrupt Enable bit
-    INTCONbits.INTE = Disable;          // RB0/INT External Interrupt Enable bit
-    INTCONbits.RBIE = Disable;          // RB Port Change Interrupt Enable bit
-
-    // Flags - Interrupciones sobre registros
-    INTCONbits.T0IF = Low;              // TMR0 Overflow Interrupt Flag bit
-    INTCONbits.INTF = Low;              // RB0/INT External Interrupt Flag bit
-    INTCONbits.RBIF = Low;              // RB Port Change Interrupt Flag bit
+//    INTCONbits.T0IE = Enable;           // TMR0 Overflow Interrupt Enable bit
+//    INTCONbits.INTE = Disable;          // RB0/INT External Interrupt Enable bit
+//    INTCONbits.RBIE = Disable;          // RB Port Change Interrupt Enable bit
+//
+//    // Flags - Interrupciones sobre registros
+//    INTCONbits.T0IF = Low;              // TMR0 Overflow Interrupt Flag bit
+//    INTCONbits.INTF = Low;              // RB0/INT External Interrupt Flag bit
+//    INTCONbits.RBIF = Low;              // RB Port Change Interrupt Flag bit
 
     // Enable/Disable - Peripheral Interrupt
-    //PIE1bits.PSPIE = Disable;         // Parallel Slave Port Read/Write Interrupt Enable bit
-    PIE1bits.ADIE = Enable;             // A/D Converter Interrupt Enable bit
-    PIE1bits.RCIE = Disable;            // USART Receive Interrupt Enable bit
-    PIE1bits.TXIE = Disable;            // USART Transmit Interrupt Enable bit
-    PIE1bits.SSPIE = Disable;           // Synchronous Serial Port Interrupt Enable bit
+//    PIE1bits.PSPIE = Disable;           // Parallel Slave Port Read/Write Interrupt Enable bit
+//    PIE1bits.ADIE = Enable;             // A/D Converter Interrupt Enable bit
+//    PIE1bits.RCIE = Disable;            // USART Receive Interrupt Enable bit
+//    PIE1bits.TXIE = Disable;            // USART Transmit Interrupt Enable bit
+//    PIE1bits.SSPIE = Disable;           // Synchronous Serial Port Interrupt Enable bit
     PIE1bits.CCP1IE = Disable;          // CCP1 Interrupt Enable bit
-    PIE1bits.TMR2IE = Disable;          // TMR2 to PR2 Match Interrupt Enable bit
-    PIE1bits.TMR1IE = Disable;          // TMR1 Overflow Interrupt Enable bit
+//    PIE1bits.TMR2IE = Disable;          // TMR2 to PR2 Match Interrupt Enable bit
+//    PIE1bits.TMR1IE = Disable;          // TMR1 Overflow Interrupt Enable bit
 
     // Flags - Peripheral Interrupt
-    //PIR1bits.PSPIF = Disable;         // Parallel Slave Port Read/Write Interrupt Flag bit
-    PIR1bits.ADIF = Low;                // A/D Converter Interrupt Flag bit
-    PIR1bits.RCIF = Low;                // USART Receive Interrupt Flag bit
-    PIR1bits.TXIF = Low;                // USART Transmit Interrupt Flag bit
-    PIR1bits.SSPIF = Low;               // Synchronous Serial Port (SSP) Interrupt Flag
+//    PIR1bits.PSPIF = Disable;           // Parallel Slave Port Read/Write Interrupt Flag bit
+//    PIR1bits.ADIF = Low;                // A/D Converter Interrupt Flag bit
+//    PIR1bits.RCIF = Low;                // USART Receive Interrupt Flag bit
+//    PIR1bits.TXIF = Low;                // USART Transmit Interrupt Flag bit
+//    PIR1bits.SSPIF = Low;               // Synchronous Serial Port (SSP) Interrupt Flag
     PIR1bits.CCP1IF = Low;              // CCP1 Interrupt Flag bit
-    PIR1bits.TMR2IF = Low;              // TMR2 to PR2 Match Interrupt Flag bit
-    PIR1bits.TMR1IF = Low;              // TMR1 Overflow Interrupt Flag bit
+//    PIR1bits.TMR2IF = Low;              // TMR2 to PR2 Match Interrupt Flag bit
+//    PIR1bits.TMR1IF = Low;              // TMR1 Overflow Interrupt Flag bit
 
     // Enable/Disable - Peripheral Interrupt
     //Bus collision, CCP and EEPROM
@@ -111,8 +110,7 @@ void iniPIC(void){
 // Cap 3.0
 // I/O PORTS
 void iniPorts(void){
-
-    TRISA = 0b00010111;//0x0f;
+    TRISA = 0b00011011;//0x0f;
 //    TRISAbits.TRISA0 = In;
 //    TRISAbits.TRISA1 = In;
 //    TRISAbits.TRISA2 = In;
@@ -139,6 +137,15 @@ void iniPorts(void){
 //    TRISCbits.TRISC5 = In;
 //    TRISCbits.TRISC6 = In;
 //    TRISCbits.TRISC7 = In;
+
+    OPTION_REGbits.nRBPU = Enable;      // PORTB Pull-up Enable bit
+    OPTION_REGbits.INTEDG = Higt;    // Interrupt Edge Select bit
+
+    INTCONbits.INTE = Disable;          // RB0/INT External Interrupt Enable bit
+    INTCONbits.RBIE = Disable;          // RB Port Change Interrupt Enable bit
+
+    INTCONbits.INTF = Low;              // RB0/INT External Interrupt Flag bit
+    INTCONbits.RBIF = Low;              // RB Port Change Interrupt Flag bit
 }
 
 // Cap 3.0
@@ -180,6 +187,9 @@ void iniTMR0(void){
     OPTION_REGbits.T0SE = Higt;         // TMR0 Source Edge Select bit
     OPTION_REGbits.PSA = Higt;          // Prescaler Assignment bit
     OPTION_REGbits.PS = 0x04;           // Prescaler Rate Select bits
+
+    INTCONbits.T0IE = Low;              // TMR0 Overflow Interrupt Enable bit
+    INTCONbits.T0IF = Low;              // TMR0 Overflow Interrupt Flag bit
 }
 
 // Cap 6.0
@@ -191,6 +201,9 @@ void iniTMR1(void){
     T1CONbits.nT1SYNC = Disable;        // Timer1 External Clock Input Synchronization Control bit
     T1CONbits.TMR1CS = Low;             // Timer1 Clock Source Select bit
     T1CONbits.TMR1ON = Low;             // Timer1 On bit
+
+    PIE1bits.TMR1IE = Low;              // TMR1 Overflow Interrupt Enable bit
+    PIR1bits.TMR1IF = Low;              // TMR1 Overflow Interrupt Flag bit
 }
 
 // Cap 7.0
@@ -200,6 +213,9 @@ void iniTMR2(void){
     T2CONbits.TOUTPS = 0x00;            // Timer2 Output Postscale Select bits
     T2CONbits.TMR2ON = Disable;         // Timer2 On bit
     T2CONbits.T2CKPS = 0x00;            //Timer2 Clock Prescale Select bits
+
+    PIE1bits.TMR2IE = Low;          // TMR2 to PR2 Match Interrupt Enable bit
+    PIR1bits.TMR2IF = Low;              // TMR2 to PR2 Match Interrupt Flag bit
 }
 
 // Cap 9.0
@@ -257,19 +273,29 @@ void iniSerialPort(void){
 //  RCSTAbits.OERR = Disable;           // Overrun Error bit
 //  RCSTAbits.RX9D = Disable;           // 9th bit of Received Data (can be parity bit,
                                         // but must be calculated by user firmware)
+
+    PIE1bits.RCIE = Disable;            // USART Receive Interrupt Enable bit
+    PIE1bits.TXIE = Disable;            // USART Transmit Interrupt Enable bit
+    PIE1bits.SSPIE = Disable;           // Synchronous Serial Port Interrupt Enable bit
+
+    PIR1bits.RCIF = Low;                // USART Receive Interrupt Flag bit
+    PIR1bits.TXIF = Low;                // USART Transmit Interrupt Flag bit
+    PIR1bits.SSPIF = Low;               // Synchronous Serial Port (SSP) Interrupt Flag
 }
 
 // Cap 11.0
 // ANALOG-TO-DIGITAL CONVERTER (A/D) MODULE
-void iniADC(void){
-
+void iniADC(){
     // ADCON0 REGISTER (ADDRESS: 1Fh)
     ADCON0bits.ADCS = 0x01;             // A/D Conversion Clock Select bits
-    ADCON0bits.CHS = 0x00;              // Analog Channel Select bits
+//    ADCON0bits.CHS = 0x00;              // Analog Channel Select bits
     ADCON0bits.GO_nDONE = Low;          // A/D Conversion Status bit
     ADCON0bits.ADON = Enable;           // A/D On bit
 
     // ADCON1 REGISTER (ADDRESS 9Fh)
     ADCON1bits.ADFM = Enable;           // A/D Result Format Select bit
-//  ADCON1bits.PCFG = 0x00;             // A/D Port Configuration Control bit
+    ADCON1bits.PCFG = 0x04;             // A/D Port Configuration Control bit // 3ang/4dig
+
+    PIE1bits.ADIE = Enable;             // A/D Converter Interrupt Enable bit
+    PIR1bits.ADIF = Low;                // A/D Converter Interrupt Flag bit
 }
